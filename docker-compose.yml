@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  database_catalogofilmes: 
+    image: postgres
+    container_name: catalogo_filmes
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=laon
+      - POSTGRES_PASSWORD=laon   
+      - POSTGRES_DB=catalogo  
+    volumes:
+      - ./pgdata:/data/postgres
