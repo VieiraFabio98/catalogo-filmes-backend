@@ -17,7 +17,7 @@ class CreateCategoryuseController {
         .catch(error => {
             return error
         })
-
+      
         return response.status(result.statusCode).json(result)
     }
 }

@@ -1,7 +1,7 @@
 import { AppError } from "@shared/infra/errors/appError";
 import { inject, injectable } from "tsyringe";
 import { ICategoryRepository } from "@modules/movies/repositories/i-category-repository"
-import { HttpResponse } from "@shared/helpers";
+import { HttpResponse, ok } from "@shared/helpers";
 import { Category } from "@modules/movies/infra/typeorm/entities/category";
 
 interface IRequest {
@@ -15,17 +15,17 @@ class CreateCategoryuseCase {
         private categoryRepository: ICategoryRepository
     ){}
 
-    async execute({ category }: IRequest): Promise<Category> {
+    async execute({ category }: IRequest): Promise<HttpResponse> {
 
-        const result = await this.categoryRepository.create({category})
-        .then(categoryResult => {
-            return categoryResult
-        })
-        .catch(error => {
+        const result = await this.categoryRepository.create({category}).then(categoriaResult => {
+            return categoriaResult
+          })
+          .catch(error => {
             return error
-        })
-
-        return result
+          })
+        
+          
+        return ok(result)
     }
 }
 

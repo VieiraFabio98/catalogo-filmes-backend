@@ -1,6 +1,7 @@
 import { ICategoryRepository } from "@modules/movies/repositories/i-category-repository";
 import { Category } from "../entities/category";
 import { Repository, getRepository } from "typeorm";
+import { HttpResponse } from "@shared/helpers";
 
 
 
@@ -16,7 +17,7 @@ class CategoryRepository implements ICategoryRepository{
     async create({
         id, 
         category
-    }: ICategoryDTO): Promise<Category> {
+    }: ICategoryDTO): Promise<HttpResponse> {
 
         const newCategory = this.repository.create({
             id, 

@@ -1,4 +1,4 @@
 interface ICategoryDTO{
     id?: string
-    category: string
+    category?: string
 }
