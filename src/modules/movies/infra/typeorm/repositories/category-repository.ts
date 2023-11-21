@@ -19,24 +19,30 @@ class CategoryRepository implements ICategoryRepository {
         category
     }: ICategoryDTO): Promise<HttpResponse> {
 
-        const newCategory = this.repository.create({
-            id,
-            category
-        })
-
-        const result = await this.repository.save(newCategory)
-            .then(result => {
-                return result
+        try{
+            const newCategory = this.repository.create({
+                id,
+                category
             })
-            .catch(error => {
-                return error
-            })
+    
+            const result = await this.repository.save(newCategory)
+                .then(result => {
+                    return result
+                })
+                .catch(error => {
+                    return error
+                })
+    
+            return result
 
-        return result
+        } catch (error) {
+            return error
+        }
     }
 
     //list
     async list({ id }: ICategoryDTO): Promise<HttpResponse> {
+
         try {
             const result = await this.repository.find({ id })
 
@@ -46,16 +52,49 @@ class CategoryRepository implements ICategoryRepository {
         }
     }
 
+    //list all
     async listAll(): Promise<HttpResponse> {
+
         try {
             const result:any[] = await this.repository.createQueryBuilder("cat")
                 .select([
                     "cat.id",
                     "cat.category"
                 ])
+                .orderBy("cat.category", "ASC")
                 .getMany()
 
             return ok(result)
+        } catch (error) {
+            return error
+        }
+    }
+
+    //update
+    async update({id, category}): Promise<HttpResponse> {
+        
+        try {
+            const findCategory = await this.repository.findOne(id)
+
+            if(!findCategory){
+                console.log("patient not found")
+            }
+
+            const newCategory = this.repository.create({
+                id,
+                category
+            })
+
+            const result = await this.repository.save(newCategory)
+            .then(result => {
+                return result
+            })
+            .catch(error => {
+                return error
+            })
+
+            return ok(result)
+            
         } catch (error) {
             return error
         }

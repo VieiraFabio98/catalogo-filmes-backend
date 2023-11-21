@@ -11,6 +11,9 @@ interface ICategoryRepository{
 
     //list all
     listAll(): Promise<HttpResponse>
+
+    //update
+    update({id, category}): Promise<HttpResponse>
 }
 
 export { ICategoryRepository }
